@@ -11,7 +11,6 @@ services:
       - ./containers/nestjs/:/nestjs/code/
     depends_on:
       - vuejs # Prevents npm ci timeout
-      - db
 
   vuejs:
     build: containers/vuejs
@@ -23,15 +22,3 @@ services:
       - 2424:2424
     volumes:
       - ./containers/vuejs/:/vuejs/code/
-
-  db:
-    image: postgres:alpine
-    container_name: db
-    env_file: .env
-    ports:
-      - "5432:5432" # Used to manually inspect the db from the host
-    volumes:
-      - db_volume:/var/lib/postgresql/data
-
-volumes:
-  db_volume:
