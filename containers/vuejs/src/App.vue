@@ -4,7 +4,7 @@ import TheWelcome from './components/TheWelcome.vue'
 import axios from 'axios';
 
 async function login() {
-  console.log(await axios.get('http://localhost:3000'))
+  console.log(await axios.post('http://localhost:3000', {'code': 'foo'}))
 }
 </script>
 
