@@ -3,6 +3,7 @@ services:
     build: containers/nestjs
     image: nestjs
     container_name: nestjs
+    env_file: .env
     init: true # Prevents waiting on 10s timeout on shutdown
     restart: on-failure
     ports:
