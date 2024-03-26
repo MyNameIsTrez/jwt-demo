@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-// TODO: Move this to a user.dto.ts
-export type User = any;
+import { User } from './user.dto';
 
 @Injectable()
 export class UsersService {

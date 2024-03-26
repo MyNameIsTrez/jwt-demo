@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
+import { SignInDto } from './sign-in.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,9 +20,7 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  // TODO: Shouldn't the values of Record also be `string`?
-  // TODO: Turn the Record into a sign-in.dto.ts
-  signIn(@Body() signInDto: Record<string, any>) {
+  signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 

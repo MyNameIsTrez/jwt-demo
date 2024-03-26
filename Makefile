@@ -1,7 +1,6 @@
 # --build rebuilds images before starting the containers
 # --detach runs the containers in the background
 # --remove-orphans removes containers for services not defined in the Compose file
-# TODO: REMOVE THE --detach AND --remove-orphans BEFORE HANDING IN
 .PHONY: up
 up:
 	docker compose up --build --detach --remove-orphans
