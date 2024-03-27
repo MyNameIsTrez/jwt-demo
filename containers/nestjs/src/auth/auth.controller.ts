@@ -17,11 +17,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Public() // TODO: Remove?
-  @HttpCode(HttpStatus.OK) // TODO: Does a valid request automatically already return 200, or does it return 201?
+  @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   login(@Request() req) {
-    console.log(`HTTP login() called`); // TODO: REMOVE
     return this.authService.login(req.user);
   }
 

@@ -24,10 +24,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  // TODO: Try removing this method
   handleRequest(err, user, info) {
     // You can throw an exception based on either "info" or "err" arguments
-    console.log(`info: ${info}`); // TODO: REMOVE
+    info;
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
