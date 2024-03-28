@@ -18,9 +18,18 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+
+	const requestHeaders = new Headers()
+	requestHeaders.set('Authorization', `Bearer ` + user.access_token)
+	return fetch('https://api.intra.42.fr/v2/me', {
+	  headers: requestHeaders
+	})
+  	.then((response) => response.json())
+  	.then((j) => {
+      const payload = { sub: j.id }
+      return {
+        access_token: this.jwtService.sign(payload),
+      }
+	  })
   }
 }

@@ -9,17 +9,17 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
-import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { CustomAuthGuard } from './custom-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(CustomAuthGuard)
   @Public()
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Get('login')
   login(@Request() req) {
     return this.authService.login(req.user);
   }
