@@ -20,7 +20,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
   ],
   providers: [
     AuthService,
-	CustomStrategy,
+    CustomStrategy,
     JwtStrategy,
     {
       provide: APP_GUARD,

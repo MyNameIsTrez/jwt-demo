@@ -3,13 +3,11 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
-import { JwtAuthGuard } from './jwt-auth.guard';
 import { CustomAuthGuard } from './custom-auth.guard';
 
 @Controller('auth')
