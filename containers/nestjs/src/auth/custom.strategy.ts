@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { Strategy } from 'passport-custom';
 import { PassportStrategy } from '@nestjs/passport';
 import {
@@ -9,7 +10,10 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
-  constructor(private authService: AuthService) {
+  constructor(
+    private configService: ConfigService,
+    private authService: AuthService,
+  ) {
     super();
   }
 
@@ -23,14 +27,17 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
 
     const formData = new FormData();
     formData.set('grant_type', 'authorization_code');
-    formData.set('client_id', process.env.INTRA_CLIENT_ID || '');
-    formData.set('client_secret', process.env.INTRA_CLIENT_SECRET || '');
+    formData.set('client_id', this.configService.getOrThrow('INTRA_CLIENT_ID'));
+    formData.set(
+      'client_secret',
+      this.configService.getOrThrow('INTRA_CLIENT_SECRET'),
+    );
     formData.set('code', code);
     formData.set(
       'redirect_uri',
-      (process.env.VITE_ADDRESS || '') +
+      this.configService.getOrThrow('VITE_ADDRESS') +
         ':' +
-        (process.env.BACKEND_PORT || '') +
+        this.configService.getOrThrow('BACKEND_PORT') +
         '/auth/login',
     );
 
