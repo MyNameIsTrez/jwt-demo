@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Redirect, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
 import { CustomAuthGuard } from './custom-auth.guard';
@@ -16,10 +9,18 @@ export class AuthController {
 
   @UseGuards(CustomAuthGuard)
   @Public()
-  @HttpCode(HttpStatus.OK)
   @Get('login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
+  @Redirect()
+  async login(@Request() req) {
+    const jwt = await this.authService.login(req.user);
+    return {
+      url:
+        process.env.VITE_ADDRESS +
+        ':' +
+        process.env.FRONTEND_PORT +
+        `?jwt=${jwt}`,
+      statusCode: 302,
+    };
   }
 
   @Get('profile')
