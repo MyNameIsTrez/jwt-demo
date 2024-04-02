@@ -1,18 +1,30 @@
-import { Controller, Get, Redirect, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Redirect,
+  Request,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
-import { CustomAuthGuard } from './custom-auth.guard';
 
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(CustomAuthGuard)
   @Public()
   @Get('auth/login')
   @Redirect()
   async login(@Request() req) {
-    const jwt = await this.authService.login(req.user);
+    const code = req.query.code;
+    if (code === undefined) {
+      // TODO: Redirect to login page instead
+      throw new UnauthorizedException('No code found');
+    }
+
+    const access_token = await this.authService.getAccessToken(code);
+
+    const jwt = await this.authService.login(access_token);
     return {
       url:
         process.env.VITE_ADDRESS +
@@ -23,9 +35,17 @@ export class AuthController {
     };
   }
 
-  @Get('auth/profile')
-  getProfile(@Request() req) {
+  // TODO: Move this to users/users.controller.ts
+  @Get('profile/username')
+  username(@Request() req) {
     req;
-    return 42;
+    return 'Sander';
+  }
+
+  // TODO: Move this to users/users.controller.ts
+  @Get('profile/pfp')
+  pfp(@Request() req) {
+    req;
+    return 123;
   }
 }

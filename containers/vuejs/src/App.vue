@@ -19,16 +19,26 @@ async function get(path: string) {
   const jwt = localStorage.getItem("jwt")
   console.log(`jwt: ${jwt}`)
   const response = await axios.get(path, {headers: {Authorization: `Bearer ${jwt}`}})
+  // TODO: If the request failed, redirect to login page
   console.log(response.data)
+  return response.data
 }
 
-function profile() {
-  get('http://localhost:3000/auth/profile')
+function get_username() {
+  get('http://localhost:3000/profile/username')
 }
+
+function get_pfp() {
+  get('http://localhost:3000/profile/pfp')
+}
+
+// TODO: Milan would use this in his template
+get_username()
+get_pfp()
 </script>
 
 <template>
-  <button @click="profile">Profile</button>
+  <!-- <button @click="get_username">Get username</button> -->
 
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
