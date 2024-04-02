@@ -3,13 +3,13 @@ import { AuthService } from './auth.service';
 import { Public } from './auth.decorator';
 import { CustomAuthGuard } from './custom-auth.guard';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(CustomAuthGuard)
   @Public()
-  @Get('login')
+  @Get('auth/login')
   @Redirect()
   async login(@Request() req) {
     const jwt = await this.authService.login(req.user);
@@ -23,8 +23,9 @@ export class AuthController {
     };
   }
 
-  @Get('profile')
+  @Get('auth/profile')
   getProfile(@Request() req) {
-    return req.user;
+    req;
+    return 42;
   }
 }

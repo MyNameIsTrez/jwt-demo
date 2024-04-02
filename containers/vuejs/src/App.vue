@@ -1,15 +1,34 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios';
 
-async function login() {
-  console.log(await axios.post('http://localhost:3000', {'code': 'foo'}))
+const router = useRouter()
+
+const urlParams = new URLSearchParams(window.location.search);
+const jwt = urlParams.get('jwt');
+
+if (jwt) {
+  localStorage.setItem('jwt', jwt);
+}
+
+router.replace({ path: '/' })
+
+async function get(path: string) {
+  const jwt = localStorage.getItem("jwt")
+  console.log(`jwt: ${jwt}`)
+  const response = await axios.get(path, {headers: {Authorization: `Bearer ${jwt}`}})
+  console.log(response.data)
+}
+
+function profile() {
+  get('http://localhost:3000/auth/profile')
 }
 </script>
 
 <template>
-  <button @click="login">Login</button>
+  <button @click="profile">Profile</button>
 
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
