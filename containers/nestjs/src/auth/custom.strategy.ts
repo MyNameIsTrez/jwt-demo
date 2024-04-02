@@ -6,19 +6,14 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
 
 @Injectable()
 export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
-  constructor(
-    private configService: ConfigService,
-    private authService: AuthService,
-  ) {
+  constructor(private configService: ConfigService) {
     super();
   }
 
-  // I have no idea what type 'request' is, but it is not 'Request' or 'ExecutionContext'
-  async validate(request): Promise<any> {
+  async validate(request: any): Promise<any> {
     const code = request.query.code;
 
     if (code === undefined) {
