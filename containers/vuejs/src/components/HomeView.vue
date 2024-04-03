@@ -25,19 +25,19 @@ async function get(path: string) {
     })
 }
 
+async function get_leaderboard() {
+  console.log('leaderboard:', await get('public/leaderboard'))
+}
+
 async function get_username() {
   console.log(`username: ${await get('user/username')}`)
 }
 
-async function get_pfp() {
-  console.log(`pfp: ${await get('user/pfp')}`)
-}
-
 // TODO: Milan would use this in his template
-get_username()
-get_pfp()
+// get_username()
 </script>
 
 <template>
+  <button @click="get_leaderboard">Get leaderboard</button>
   <button @click="get_username">Get username</button>
 </template>
