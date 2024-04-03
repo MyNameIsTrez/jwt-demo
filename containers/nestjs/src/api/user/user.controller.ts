@@ -1,8 +1,8 @@
 import { Controller, Get, Request } from '@nestjs/common';
 
-@Controller()
+@Controller('api/user')
 export class UserController {
-  @Get('api/user/username')
+  @Get('username')
   username(@Request() req) {
     req;
     return 'Sander';

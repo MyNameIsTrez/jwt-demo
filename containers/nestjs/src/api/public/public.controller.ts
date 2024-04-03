@@ -2,9 +2,9 @@ import { Controller, Get } from '@nestjs/common';
 import { Public } from 'src/auth/auth.decorator';
 
 @Public()
-@Controller()
+@Controller('api/public')
 export class PublicController {
-  @Get('api/public/leaderboard')
+  @Get('leaderboard')
   leaderboard() {
     return { sander: 42, victor: 69 };
   }
