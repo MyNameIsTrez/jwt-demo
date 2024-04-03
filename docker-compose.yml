@@ -17,6 +17,7 @@ services:
     build: containers/vuejs
     image: vuejs
     container_name: vuejs
+    env_file: .env
     init: true # Prevents waiting on 10s timeout on shutdown
     restart: on-failure
     ports:
