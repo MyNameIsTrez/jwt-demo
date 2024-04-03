@@ -1,7 +1,3 @@
-<script setup lang="ts">
-console.log('In App.vue')
-</script>
-
 <template>
   <main>
     <!-- RouterView is required to have route components like LoginView be rendered -->

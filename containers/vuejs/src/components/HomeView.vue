@@ -1,6 +1,4 @@
 <script setup lang="ts">
-console.log('In HomePage.vue')
-
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
