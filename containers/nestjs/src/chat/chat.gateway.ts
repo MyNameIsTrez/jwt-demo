@@ -8,7 +8,6 @@ import { Socket } from 'socket.io';
 import { Server } from 'http';
 import { JwtService } from '@nestjs/jwt';
 
-// TODO: Is this still necessary?
 // The cors setting prevents this error:
 // "Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource"
 @WebSocketGateway({ cors: { origin: '*' } })
