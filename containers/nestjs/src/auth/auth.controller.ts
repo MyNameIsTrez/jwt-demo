@@ -18,8 +18,9 @@ export class AuthController {
   async login(@Request() req) {
     const code = req.query.code;
     if (code === undefined) {
-      // TODO: Redirect to login page instead
-      throw new UnauthorizedException('No code found');
+      throw new UnauthorizedException(
+        'Expected an authorization code parameter from the 42 API',
+      );
     }
 
     const access_token = await this.authService.getAccessToken(code);
@@ -33,19 +34,5 @@ export class AuthController {
         `?jwt=${jwt}`,
       statusCode: 302,
     };
-  }
-
-  // TODO: Move this to users/users.controller.ts
-  @Get('api/user/username')
-  username(@Request() req) {
-    req;
-    return 'Sander';
-  }
-
-  // TODO: Move this to users/users.controller.ts
-  @Get('api/user/pfp')
-  pfp(@Request() req) {
-    req;
-    return 123;
   }
 }
