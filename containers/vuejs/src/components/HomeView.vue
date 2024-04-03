@@ -32,9 +32,6 @@ async function get_leaderboard() {
 async function get_username() {
   console.log(`username: ${await get('user/username')}`)
 }
-
-// TODO: Milan would use this in his template
-// get_username()
 </script>
 
 <template>
