@@ -18,18 +18,18 @@ router.replace({ path: '/' })
 async function get(path: string) {
   const jwt = localStorage.getItem("jwt")
   console.log(`jwt: ${jwt}`)
-  const response = await axios.get(path, {headers: {Authorization: `Bearer ${jwt}`}})
+  const response = await axios.get(`http://localhost:3000/api/${path}`, {headers: {Authorization: `Bearer ${jwt}`}})
   // TODO: If the request failed, redirect to login page
   console.log(response.data)
   return response.data
 }
 
 function get_username() {
-  get('http://localhost:3000/profile/username')
+  get('user/username')
 }
 
 function get_pfp() {
-  get('http://localhost:3000/profile/pfp')
+  get('user/pfp')
 }
 
 // TODO: Milan would use this in his template

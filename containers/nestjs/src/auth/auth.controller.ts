@@ -36,14 +36,14 @@ export class AuthController {
   }
 
   // TODO: Move this to users/users.controller.ts
-  @Get('profile/username')
+  @Get('api/user/username')
   username(@Request() req) {
     req;
     return 'Sander';
   }
 
   // TODO: Move this to users/users.controller.ts
-  @Get('profile/pfp')
+  @Get('api/user/pfp')
   pfp(@Request() req) {
     req;
     return 123;
