@@ -1,6 +1,5 @@
 import {
   ConnectedSocket,
-  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -9,17 +8,21 @@ import { Socket } from 'socket.io';
 import { Server } from 'http';
 import { JwtService } from '@nestjs/jwt';
 
+// TODO: Is this still necessary?
 // The cors setting prevents this error:
 // "Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource"
 @WebSocketGateway({ cors: { origin: '*' } })
-export class AppGateway {
+export class ChatGateway {
   constructor(private jwtService: JwtService) {}
 
   @WebSocketServer()
   server: Server;
 
   handleConnection(client: Socket) {
-    console.log('Client connected');
+    console.log('in chat');
+
+    console.log('client.id in handleConnection():', client.id);
+    console.log('Client connected   ');
 
     const authorization = client.handshake.headers.authorization;
     const jwt = authorization.split(' ')[1];
@@ -32,15 +35,13 @@ export class AppGateway {
     }
   }
 
-  afterInit() {
-    const interval_ms = 1000;
-    setInterval(() => {
-      this.server.emit('pong', 'lmao');
-    }, interval_ms);
+  handleDisconnect(client: Socket) {
+    console.log(`Client disconnected in chat: ${client.id}`);
   }
 
-  @SubscribeMessage('foo')
-  async foo(@ConnectedSocket() client: Socket, @MessageBody() body) {
-    console.log('foo');
+  @SubscribeMessage('chat/joinRoom')
+  async joinRoom(@ConnectedSocket() client: Socket) {
+    console.log('client.id in chat/joinRoom():', client.id);
+    console.log('Joining room');
   }
 }
