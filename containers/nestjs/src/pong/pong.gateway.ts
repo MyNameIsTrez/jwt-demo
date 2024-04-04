@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 
 // The cors setting prevents this error:
 // "Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource"
-@WebSocketGateway({ cors: { origin: '*' } })
+@WebSocketGateway({ cors: { origin: '*' }, namespace: 'pong' })
 export class PongGateway {
   constructor(private jwtService: JwtService) {}
 
@@ -44,7 +44,7 @@ export class PongGateway {
     }, interval_ms);
   }
 
-  @SubscribeMessage('pong/joinGame')
+  @SubscribeMessage('joinGame')
   async joinGame(@ConnectedSocket() client: Socket) {
     console.log('client.id in pong/joinGame():', client.id);
     console.log('Joining game');

@@ -41,41 +41,42 @@ const opts = {
     Authorization: authorization_string
   }
 }
-const socket = io(socket_url, opts)
+// const socket = io(socket_url, opts)
+const pongSocket = io(socket_url + '/pong', opts)
 
-onUnmounted(() => {
-  socket.disconnect()
-  console.log('disconnected')
-})
+// onUnmounted(() => {
+//   socket.disconnect()
+//   console.log('disconnected')
+// })
 
-// function joinGame() {
-//   console.log('in joinGame()')
-//   socket.emit('pong/joinGame', 'deadbeef')
+function joinGame() {
+  console.log('in joinGame()')
+  pongSocket.emit('joinGame', 'deadbeef')
+}
+
+// function joinRoom() {
+//   console.log('in joinRoom()')
+//   socket.emit('chat/joinRoom', { room_uuid: 'deadbeef' })
 // }
 
-function joinRoom() {
-  console.log('in joinRoom()')
-  socket.emit('chat/joinRoom', { room_uuid: 'deadbeef' })
-}
+// function sendMessage() {
+//   console.log('in sendMessage()')
+//   socket.emit('chat/message', { room_uuid: 'deadbeef', message: 'bar' })
+// }
 
-function sendMessage() {
-  console.log('in sendMessage()')
-  socket.emit('chat/message', { room_uuid: 'deadbeef', message: 'bar' })
-}
+// socket.on('pong', (data) => {
+//   console.log('pong', data)
+// })
 
-socket.on('pong', (data) => {
-  console.log('pong', data)
-})
-
-socket.on('foo', (data) => {
-  console.log('foo', data)
-})
+// socket.on('foo', (data) => {
+//   console.log('foo', data)
+// })
 </script>
 
 <template>
-  <button @click="getLeaderboard">Get leaderboard</button>
-  <button @click="getUsername">Get username</button>
-  <!-- <button @click="joinGame">Join game</button> -->
-  <button @click="joinRoom">Join room</button>
-  <button @click="sendMessage">Send message</button>
+  <!-- <button @click="getLeaderboard">Get leaderboard</button> -->
+  <!-- <button @click="getUsername">Get username</button> -->
+  <button @click="joinGame">Join game</button>
+  <!-- <button @click="joinRoom">Join room</button> -->
+  <!-- <button @click="sendMessage">Send message</button> -->
 </template>
