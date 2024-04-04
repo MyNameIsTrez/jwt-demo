@@ -13,7 +13,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  async getAccessToken(code: string): Promise<any> {
+  async getAccessToken(code: string): Promise<string> {
     const formData = new FormData();
     formData.set('grant_type', 'authorization_code');
     formData.set('client_id', this.configService.getOrThrow('INTRA_CLIENT_ID'));
@@ -42,7 +42,7 @@ export class AuthService {
             'Could not retrieve your 42 access token',
           );
         }
-        return { access_token };
+        return access_token;
       })
       .catch((err) => {
         console.error(err);
