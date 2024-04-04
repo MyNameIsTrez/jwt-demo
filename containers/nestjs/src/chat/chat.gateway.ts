@@ -1,5 +1,6 @@
 import {
   ConnectedSocket,
+  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -21,7 +22,7 @@ export class ChatGateway {
     console.log('in chat');
 
     console.log('client.id in handleConnection():', client.id);
-    console.log('Client connected   ');
+    console.log('Client connected');
 
     const authorization = client.handshake.headers.authorization;
     const jwt = authorization.split(' ')[1];
@@ -39,8 +40,33 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('chat/joinRoom')
-  async joinRoom(@ConnectedSocket() client: Socket) {
-    console.log('client.id in chat/joinRoom():', client.id);
-    console.log('Joining room');
+  async joinRoom(
+    @ConnectedSocket() client: Socket,
+    @MessageBody('room_uuid') room_uuid: string,
+  ) {
+    console.log(
+      `client ${client.id} in chat/joinRoom() joining room with uuid ${room_uuid}`,
+    );
+    client.join(room_uuid);
+  }
+
+  // TODO: Let this call joinRoom() in a loop?
+  // @SubscribeMessage('chat/joinRooms')
+  // async joinRooms(@ConnectedSocket() client: Socket) {
+  //   console.log(`client ${client.id} in chat/joinRooms()`);
+  //   client.join('foo'); // TODO: Randomly generated ID?
+  // }
+
+  @SubscribeMessage('chat/message')
+  async message(
+    @ConnectedSocket() client: Socket,
+    @MessageBody('room_uuid') room_uuid: string,
+    @MessageBody('message') message: string,
+  ) {
+    console.log(
+      `client ${client.id} in chat/message() in room with uuid ${room_uuid}, sending message '${message}'`,
+    );
+    // this.server.to(room_uuid).emit('foo', message);
+    client.to(room_uuid).emit('foo', message);
   }
 }

@@ -12,7 +12,7 @@ if (jwt) {
   localStorage.setItem('jwt', jwt)
 }
 
-router.replace({ path: '/' }) // Trims the jwt from the URL
+router.replace({ path: '/' }) // Trims the jwt parameter from the URL
 
 async function get(path: string) {
   const jwt = localStorage.getItem('jwt')
@@ -48,24 +48,34 @@ onUnmounted(() => {
   console.log('disconnected')
 })
 
-function joinGame() {
-  console.log('in joinGame()')
-  socket.emit('pong/joinGame')
-}
+// function joinGame() {
+//   console.log('in joinGame()')
+//   socket.emit('pong/joinGame', 'deadbeef')
+// }
 
 function joinRoom() {
   console.log('in joinRoom()')
-  socket.emit('chat/joinRoom')
+  socket.emit('chat/joinRoom', { room_uuid: 'deadbeef' })
+}
+
+function sendMessage() {
+  console.log('in sendMessage()')
+  socket.emit('chat/message', { room_uuid: 'deadbeef', message: 'bar' })
 }
 
 socket.on('pong', (data) => {
   console.log('pong', data)
+})
+
+socket.on('foo', (data) => {
+  console.log('foo', data)
 })
 </script>
 
 <template>
   <button @click="getLeaderboard">Get leaderboard</button>
   <button @click="getUsername">Get username</button>
-  <button @click="joinGame">Join game</button>
+  <!-- <button @click="joinGame">Join game</button> -->
   <button @click="joinRoom">Join room</button>
+  <button @click="sendMessage">Send message</button>
 </template>
