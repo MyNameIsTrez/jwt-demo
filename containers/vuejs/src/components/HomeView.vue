@@ -26,9 +26,9 @@ async function get(path: string) {
     })
 }
 
-async function getLeaderboard() {
-  console.log('leaderboard:', await get('public/leaderboard'))
-}
+// async function getLeaderboard() {
+//   console.log('leaderboard:', await get('public/leaderboard'))
+// }
 
 async function getUsername() {
   console.log(`username: ${await get('user/username')}`)
@@ -75,7 +75,7 @@ function joinGame() {
 
 <template>
   <!-- <button @click="getLeaderboard">Get leaderboard</button> -->
-  <!-- <button @click="getUsername">Get username</button> -->
+  <button @click="getUsername">Get username</button>
   <button @click="joinGame">Join game</button>
   <!-- <button @click="joinRoom">Join room</button> -->
   <!-- <button @click="sendMessage">Send message</button> -->
