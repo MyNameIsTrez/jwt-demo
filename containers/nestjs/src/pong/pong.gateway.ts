@@ -4,8 +4,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
-import { Server } from 'http';
+import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 
 // The cors setting prevents this error:

@@ -5,8 +5,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
-import { Server } from 'http';
+import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 
 // The cors setting prevents this error:
@@ -66,7 +65,6 @@ export class ChatGateway {
     console.log(
       `client ${client.id} in chat/message() in room with uuid ${room_uuid}, sending message '${message}'`,
     );
-    // this.server.to(room_uuid).emit('foo', message);
-    client.to(room_uuid).emit('foo', message);
+    this.server.to(room_uuid).emit('foo', message);
   }
 }
