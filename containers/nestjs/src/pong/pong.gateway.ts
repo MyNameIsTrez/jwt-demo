@@ -26,7 +26,8 @@ export class PongGateway {
     const jwt = authorization.split(' ')[1];
 
     try {
-      this.jwtService.verify(jwt);
+      const decoded = this.jwtService.verify(jwt);
+      client.data.intra_id = decoded.sub;
     } catch (e) {
       console.error('Disconnecting client because verifying their jwt failed');
       client.disconnect();
