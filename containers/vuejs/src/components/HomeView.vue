@@ -17,7 +17,7 @@ router.replace({ path: '/' }) // Trims the jwt parameter from the URL
 async function get(path: string) {
   const jwt = localStorage.getItem('jwt')
   return await axios
-    .get(`http://localhost:3000/api/${path}`, { headers: { Authorization: `Bearer ${jwt}` } })
+    .get(`http://localhost:4242/api/${path}`, { headers: { Authorization: `Bearer ${jwt}` } })
     .then((response) => {
       return response.data
     })
