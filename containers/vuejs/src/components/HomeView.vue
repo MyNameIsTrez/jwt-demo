@@ -41,13 +41,12 @@ const opts = {
     Authorization: authorization_string
   }
 }
-// const socket = io(socket_url, opts)
 const pongSocket = io(socket_url + '/pong', opts)
 
-// onUnmounted(() => {
-//   socket.disconnect()
-//   console.log('disconnected')
-// })
+onUnmounted(() => {
+  pongSocket.disconnect()
+  console.log('disconnected')
+})
 
 function joinGame() {
   console.log('in joinGame()')
